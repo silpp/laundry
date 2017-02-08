@@ -2,7 +2,7 @@
 include 'db.php';
 if ($_REQUEST['req'] =='upd_req'){
     $sel = "SELECT * FROM Customer WHERE Customer_id = '$_REQUEST[id]'";
-    //echo $sel;
+    echo $sel;
     $sel_run = mysqli_query($conn,$sel);
     while($row = mysqli_fetch_assoc($sel_run)){ ?>
                
@@ -69,7 +69,39 @@ if ($_REQUEST['req'] =='upd_req'){
 }
 }
 elseif($_REQUEST['req']=='upd_btn'){
-    $upd = "UPDATE Customer SET Customer_firstname='$_REQUEST[u_firstname]', Customer_lastname='$_REQUEST[u_lastname]', Customer_gender='$_REQUEST[u_gender]', Customer_birthdate='$_REQUEST[u_birthdate]', Customer_occupation='$_REQUEST[u_occupation]', Customer_telephone='$_REQUEST[u_telephone]', Customer_address='$_REQUEST[u_address]', Customer_email= '$_REQUEST[u_email]' WHERE Customer_id= '$_REQUEST[id]' ";
+            if($_REQUEST['u_firstname'] !=''){
+            $firstname = "'".$_REQUEST['u_firstname']."'";
+            }else $firstname = 'NULL';
+            
+            if($_REQUEST['u_lastname'] !=''){
+                $lastname = "'".$_REQUEST['u_lastname']."'";
+            }else $lastname = 'NULL';
+            
+            if($_REQUEST['u_gender'] !=''){
+                $gender = "'".$_REQUEST['u_gender']."'";
+            }else $gender = 'NULL';
+            
+            if($_REQUEST['u_birthdate'] !=''){
+                $birthdate = "'".$_REQUEST['u_birthdate']."'";
+            }else $birthdate ='NULL';
+            
+            if($_REQUEST['u_occupation'] != ''){
+                $occupation = "'".$_REQUEST['u_occupation']."'";
+            }else $occupation ='NULL';
+            
+            if($_REQUEST['u_telephone'] !=''){
+                $telephone = "'".$_REQUEST['u_telephone']."'";
+            }else $telephone = 'NULL';
+            
+            if($_REQUEST['u_address'] !=''){
+                $address = "'".$_REQUEST['u_address']."'";
+            } else $address ='NULL';
+            
+            if($_REQUEST['u_email'] !=''){
+                $email = "'".$_REQUEST['u_email']."'";
+            }else $email = 'NULL';
+    
+    $upd = "UPDATE Customer SET Customer_firstname=$firstname, Customer_lastname=$lastname, Customer_gender=$gender, Customer_birthdate=$birthdate, Customer_occupation=$occupation, Customer_telephone=$telephone, Customer_address=$address, Customer_email= $email WHERE Customer_id= '$_REQUEST[id]' ";
     echo $upd;
     $upd_run = mysqli_query($conn,$upd);
     
