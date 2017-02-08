@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv=Content-Type content="text/html; charset=utf-8">
+        <title>Basic Bosch Laundry</title>
+        <link rel ="stylesheet"href="css/bootstrap.min.css">
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script>
+            function ajax(req,id){
+                
+                var name = document.getElementById('name').value;
+                var price = document.getElementById('price').value;
+                var groupid = document.getElementById('groupid').value;
+                if(req== undefined){
+                    req = '';
+                    id  = '';
+                }else if (req =='add'){
+                    id = '';
+                }
+                var httpreq = new XMLHttpRequest();
+                httpreq.onreadystatechange=function(){
+                    if(httpreq.readyState==4&&httpreq.status==200){
+                        document.getElementById('test').innerHTML =httpreq.responseText;
+                        
+                    }
+                    
+                }
+                httpreq.open('GET','service_data.php?id='+id                                         +'&req='+req
+                    +'&st_name='+name
+                    +'&st_price='+price
+                    +'&st_groupid='+groupid,true);
+                httpreq.send();
+            }
+            function edit_ajax(edit_req, edit_id){  
+                if(edit_req == 'upd_req'){
+                    upd_name = '';
+                    upd_price = '';
+                    upd_groupid = '';
+                    
+                }else{
+                    var upd_name = document.getElementById('upd_name').value;
+                    var upd_price = document.getElementById('upd_price').value;
+                    var upd_groupid = document.getElementById('upd_groupid').value;
+                }    
+                var httpreq = new XMLHttpRequest();
+                httpreq.onreadystatechange=function(){
+                    if(httpreq.readyState==4&&httpreq.status==200){
+                        document.getElementById('form-data').innerHTML =httpreq.responseText;
+                        if(edit_req=='upd_btn'){
+                           window.location.reload();
+                        }
+                    }         
+                }       
+                httpreq.open('GET','service_edit.php?id='+edit_id+
+                             '&req='+edit_req+
+                             '&u_name='+upd_name+
+                             '&u_price='+upd_price+
+                             '&u_groupid='+upd_groupid,true);
+                httpreq.send();
+            }
+            function search_ajax(){ 
+                var search = document.getElementById('searchbyname').value;
+                var httpreq = new XMLHttpRequest();
+                httpreq.onreadystatechange=function(){
+                    if(httpreq.readyState==4&&httpreq.status==200){
+                        document.getElementById('test').innerHTML =httpreq.responseText;
+                    }         
+                }       
+                httpreq.open('GET','service_search.php?name='+search,true);
+                httpreq.send();
+            }
+        </script>
+    </head>
+    <body onload = "ajax();">
+        <div class="container">
+            <div class="jumbotron">
+                <h1 class = "text-center"> Basic Bosch Laundry</h1>
+                
+            </div>
+            <div class = "form-horizontal" method="post" id="form-data">
+                <div class ="from-group">
+                    <label class="label-control col-md-2" for="name">ลักษณะบริการ</label>
+                    <div class = "col-md-10">
+                        <input type="text" id="name" class = "form-control">
+                    </div>
+                </div>
+                <div class ="from-group">
+                    <label class="label-control col-md-2" for="price">ราคาต่อรายการ(บาท)</label>
+                    <div class = "col-md-10">
+                        <input type="text" id="price" class = "form-control">
+                    </div>
+                </div>
+                <div class ="from-group">
+                    <label class="label-control col-md-2" for="groupid">รหัสกลุ่มบริการ</label>
+                    <div class = "col-md-10">
+                        <input type="text" id="groupid" class = "form-control">
+                    </div>
+                </div>
+                <div class = "form-group">
+                    <div class ="col-md-10 col-md-offset-2">
+                        <button class ="btn btn-success btn-block" onclick="ajax('add');">เพิ่มงานบริการ</button>
+                    </div>
+                </div>
+                
+            </div>
+            <h2 class="text-center pull-left">บริการซักอบรีด</h2>
+            <input type = "text" class ="pull-right form-control" id ="searchbyname" onkeyup="search_ajax()" placeholder="Search by Name" style ="position: relative;top: 20px;width: 250px;">
+            <table class="table text-center">
+                <thread>
+                    <tr class="success">
+                        <td>รหัสบริการ</td>
+                        <td>รหัสกลุ่มบริการ</td>
+                        <td>ลักษณะบริการ</td>
+                        <td>ราคาต่อรายการ(บาท)</td>
+                        <td>เปลี่ยนแปลงข้อมูล</td>
+                    </tr>
+                </thread>
+                <tbody id='test'>
+                    
+ 
+                </tbody>
+            </table>
+            
+            
+        </div>
+    </body>
+</html>
