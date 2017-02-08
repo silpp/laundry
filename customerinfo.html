@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+   //Branch add item test2
+    <head>
+        <meta http-equiv=Content-Type content="text/html; charset=utf-8">
+        <title>Basic Bosch Laundry</title>
+        <link rel ="stylesheet"href="css/bootstrap.min.css">
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script>
+            function ajax(req,id){
+                
+                var firstname = document.getElementById('firstname').value;
+                var lastname = document.getElementById('lastname').value;
+                var gender = document.getElementById('gender').value;
+                var birthdate = document.getElementById('birthdate').value;
+                var occupation = document.getElementById('occupation').value;
+                var telephone = document.getElementById('telephone').value;
+                var address = document.getElementById('address').value;
+                var email = document.getElementById('email').value;
+                if(req== undefined){
+                    req = '';
+                    id  = '';
+                }else if (req =='add'){
+                    id = '';
+                }
+                var httpreq = new XMLHttpRequest();
+                httpreq.onreadystatechange=function(){
+                    if(httpreq.readyState==4&&httpreq.status==200){
+                        document.getElementById('test').innerHTML =httpreq.responseText;
+                        
+                    }
+                    
+                }
+                httpreq.open('GET','customerinfo_data.php?id='+id+'&req='+req+'&st_firstname='+firstname+'&st_lastname='+lastname+'&st_gender='+gender+'&st_birthdate='+birthdate+'&st_occupation='+occupation+'&st_telephone='+telephone+'&st_address='+address+'&st_email='+email,true);
+                httpreq.send();
+            }
+            function edit_ajax(edit_req, edit_id){  
+                if(edit_req == 'upd_req'){
+                    upd_firstname = '';
+                    upd_lastname = '';
+                    upd_gender = '';
+                    upd_birthdate = '';
+                    upd_occupation = '';
+                    upd_telephone = '';
+                    upd_address = '';
+                    upd_email = '';
+                }else{
+                    var upd_firstname = document.getElementById('upd_firstname').value;
+                    var upd_lastname = document.getElementById('upd_lastname').value;
+                    var upd_gender = document.getElementById('upd_gender').value;
+                    var upd_birthdate = document.getElementById('upd_birthdate').value;
+                    var upd_occupation = document.getElementById('upd_occupation').value;
+                    var upd_telephone = document.getElementById('upd_telephone').value;
+                    var upd_address = document.getElementById('upd_address').value;
+                    var upd_email = document.getElementById('upd_email').value;
+                }    
+                var httpreq = new XMLHttpRequest();
+                httpreq.onreadystatechange=function(){
+                    if(httpreq.readyState==4&&httpreq.status==200){
+                        document.getElementById('form-data').innerHTML =httpreq.responseText;
+                        if(edit_req=='upd_btn'){
+                           window.location.reload();
+                        }
+                    }         
+                }       
+                httpreq.open('GET','customerinfo_edit.php?id='+edit_id+
+                             '&req='+edit_req+
+                             '&u_firstname='+upd_firstname+
+                             '&u_lastname='+upd_lastname+
+                             '&u_gender='+upd_gender+
+                             '&u_birthdate='+upd_birthdate+
+                             '&u_occupation='+upd_occupation+
+                             '&u_telephone='+upd_telephone+
+                             '&u_address='+upd_address+
+                             '&u_email='+upd_email,true);
+                httpreq.send();
+            }
+            function search_ajax(){ 
+                var search = document.getElementById('searchbyname').value;
+                var httpreq = new XMLHttpRequest();
+                httpreq.onreadystatechange=function(){
+                    if(httpreq.readyState==4&&httpreq.status==200){
+                        document.getElementById('test').innerHTML =httpreq.responseText;
+                    }         
+                }       
+                httpreq.open('GET','customerinfo_search.php?name='+search,true);
+                httpreq.send();
+            }
+        </script>
+    </head>
+    <body onload = "ajax();">
+        <div class="container">
+            <div class="jumbotron">
+                <h1 class = "text-center"> Basic Bosch Laundry</h1>
+                
+            </div>
+            <div class = "form-horizontal" method="post" id="form-data">
+                <div class ="from-group">
+                    <label class="label-control col-md-2" for="firstname">FirstName</label>
+                    <div class = "col-md-10">
+                        <input type="text" id="firstname" class = "form-control">
+                    </div>
+                </div>
+                <div class ="from-group">
+                    <label class="label-control col-md-2" for="lastname">LastName</label>
+                    <div class = "col-md-10">
+                        <input type="text" id="lastname" class = "form-control">
+                    </div>
+                </div>
+                <div class ="from-group">
+                    <label class="label-control col-md-2" for="gender"> Gender</label>
+                    <div class = "col-md-10">
+                        <select id="gender" class="form-control">
+                            <option value = ''>เพศ</option>
+                            <option value = 'ชาย'>ชาย</option>
+                            <option value = 'หญิง'>หญิง</option>
+                        </select>
+                    </div>
+                </div>
+                <div class ="from-group">
+                    <label class="label-control col-md-2" for="birthdate">BirthDate</label>
+                    <div class = "col-md-10">
+                        <input type="date" id="birthdate" class = "form-control">
+                    </div>
+                </div>
+                <div class ="from-group">
+                    <label class="label-control col-md-2" for="occupation">Occupation</label>
+                    <div class = "col-md-10">
+                        <input type="text" id="occupation" class = "form-control">
+                    </div>
+                </div>
+                <div class ="from-group">
+                    <label class="label-control col-md-2" for="telephone">Telephone</label>
+                    <div class = "col-md-10">
+                        <input type="number" id="telephone" class = "form-control">
+                    </div>
+                </div>
+                <div class ="from-group">
+                    <label class="label-control col-md-2" for="address">Address</label>
+                    <div class = "col-md-10">
+                        <input type="text" id="address" class = "form-control">
+                    </div>
+                </div>
+                <div class ="from-group">
+                    <label class="label-control col-md-2" for="email">E-mail</label>
+                    <div class = "col-md-10">
+                        <input type="text" id="email" class = "form-control">
+                    </div>
+                </div>
+                <div class = "form-group">
+                    <div class ="col-md-10 col-md-offset-2">
+                        <button class ="btn btn-success btn-block" onclick="ajax('add');">Add New Record</button>
+                    </div>
+                </div>
+                
+            </div>
+            <h2 class="text-center pull-left">Customer Record</h2>
+            <input type = "text" class ="pull-right form-control" id ="searchbyname" onkeyup="search_ajax()" placeholder="Search by Name" style ="position: relative;top: 20px;width: 250px;">
+            <table class="table text-center">
+                <thread>
+                    <tr class="success">
+                        <td>ID</td>
+                        <td>FirstName</td>
+                        <td>LastName</td>
+                        <td>Gender</td>
+                        <td>BirthDate</td>
+                        <td>Occupation</td>
+                        <td>Telephone</td>
+                        <td>Address</td>
+                        <td>E-mail</td>
+                        <td>Action</td>
+                    </tr>
+                </thread>
+                <tbody id='test'>
+                    
+ 
+                </tbody>
+            </table>
+            
+            
+        </div>
+    </body>
+</html>
